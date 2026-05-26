@@ -1,0 +1,95 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(MERCHANT)
+  stores    Store[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  SUPERADMIN
+  MERCHANT
+}
+
+model Store {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique // Subdomain tracker (e.g., "lyvera")
+  domain      String?    @unique // Custom root domains hook up option
+  logoUrl     String?
+  bannerColor String     @default("#800000") // Brand color customization
+  ownerId     String
+  owner       User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products    Product[]
+  categories  Category[]
+  orders      Order[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([ownerId])
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String
+  storeId   String
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  products  Product[]
+  createdAt DateTime  @default(now())
+
+  @@unique([slug, storeId])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  price       Int      // Stored cleanly as integers
+  size        String
+  images      String[]
+  videoUrl    String?
+  description String?
+  isSold      Boolean  @default(false)
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([categoryId])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  storeId         String
+  store           Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  customerName    String
+  customerPhone   String
+  customerEmail   String
+  totalAmount     Int
+  paymentStatus   String      @default("PENDING") // PENDING, PAID, FAILED
+  mpesaCheckoutId String?     @unique
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  name      String
+  price     Int
+}

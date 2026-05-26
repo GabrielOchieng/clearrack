@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Navbar from "@/components/navigation/Navbar";
+import Footer from "@/components/navigation/Footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,11 +14,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Update this to reflect your new SaaS brand identity
 export const metadata: Metadata = {
-  title: "ClearRack | Instant Single-Item Boutique Commerce",
+  title: "ClearRack | Turn Your Stock Drops Into Instant Cash Flow",
   description:
-    "The premium multi-tenant operating system for curated thrift collections, streetwear drops, and 1-of-1 boutique inventory serialization.",
+    "The high-velocity e-commerce engine built for physical stock drops. Sell out your limited apparel collections and 1-of-1 items instantly right inside WhatsApp with automated M-Pesa tracking.",
 };
 
 export default function RootLayout({
@@ -29,11 +30,15 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      {/* Kept min-h-full and added bg-zinc-50 as a clean, corporate background default 
-        that works beautifully for both your admin dashboards and marketplace grids.
-      */}
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 selection:bg-zinc-900 selection:text-white">
-        {children}
+        {/* Global Fixed Navigation Header Bar */}
+        <Navbar />
+
+        {/* Content Node Frame with dynamic top spacing offset for sticky navbar overlay visibility */}
+        <main className="flex-1 pt-4">{children}</main>
+
+        {/* Global Marketing Platform Footer */}
+        <Footer />
       </body>
     </html>
   );

@@ -10,5 +10,8 @@ export default defineConfig({
   },
   datasource: {
     url: process.env["DATABASE_URL"],
-  },
+    // We apply "as any" right here to satisfy the tight type definitions
+    // while feeding the direct connection parameter to Prisma's engine layers.
+    directUrl: process.env["DIRECT_URL"],
+  } as any,
 });

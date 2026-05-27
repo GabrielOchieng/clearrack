@@ -1,92 +1,3 @@
-// import { NextResponse } from "next/server";
-// import nodemailer from "nodemailer";
-
-// export async function POST(request: Request) {
-//   try {
-//     const body = await request.json();
-//     const { businessName, contactName, phone, handle, dropVolume } = body;
-
-//     // Validate minimum required fields
-//     if (!businessName || !phone || !contactName) {
-//       return NextResponse.json(
-//         { error: "Missing required onboarding details." },
-//         { status: 400 },
-//       );
-//     }
-
-//     // 1. Configure the SMTP Transporter
-//     const transporter = nodemailer.createTransport({
-//       service: "gmail",
-//       auth: {
-//         user: process.env.SMTP_USER,
-//         pass: process.env.SMTP_PASS,
-//       },
-//     });
-
-//     // 2. Draft an elegant, scannable email alert
-//     const emailHtml = `
-//       <div style="font-family: sans-serif; padding: 24px; color: #1c1917; max-width: 600px; border: 1px solid #e7e5e4; rounded: 12px;">
-//         <h2 style="color: #ea580c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; font-size: 18px;">
-//           ClearRack Pipeline Alert
-//         </h2>
-//         <p style="font-size: 14px; color: #78716c; margin-top: 0; margin-bottom: 24px;">
-//           A high-intent merchant has requested a custom boutique instance.
-//         </p>
-
-//         <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-//           <tr style="border-bottom: 1px solid #f5f5f4;">
-//             <td style="padding: 10px 0; font-weight: bold; color: #44403c; width: 140px;">Boutique Name:</td>
-//             <td style="padding: 10px 0; color: #1c1917;">${businessName}</td>
-//           </tr>
-//           <tr style="border-bottom: 1px solid #f5f5f4;">
-//             <td style="padding: 10px 0; font-weight: bold; color: #44403c;">Contact Owner:</td>
-//             <td style="padding: 10px 0; color: #1c1917;">${contactName}</td>
-//           </tr>
-//           <tr style="border-bottom: 1px solid #f5f5f4;">
-//             <td style="padding: 10px 0; font-weight: bold; color: #44403c;">Phone Number:</td>
-//             <td style="padding: 10px 0; color: #1c1917;">
-//               <a href="https://wa.me/${phone.replace(/[^0-9]/g, "")}" style="color: #ea580c; font-weight: bold; text-decoration: none;">
-//                 ${phone} (Open WhatsApp)
-//               </a>
-//             </td>
-//           </tr>
-//           <tr style="border-bottom: 1px solid #f5f5f4;">
-//             <td style="padding: 10px 0; font-weight: bold; color: #44403c;">Social Handle:</td>
-//             <td style="padding: 10px 0; color: #1c1917;">${handle || "None Provided"}</td>
-//           </tr>
-//           <tr>
-//             <td style="padding: 10px 0; font-weight: bold; color: #44403c;">Est. Drop Volume:</td>
-//             <td style="padding: 10px 0; color: #1c1917;">${dropVolume || "Not specified"}</td>
-//           </tr>
-//         </table>
-
-//         <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #e7e5e4; font-size: 11px; color: #a8a29e; text-align: center;">
-//           ClearRack Ingestion Engine • Automated Lead Router
-//         </div>
-//       </div>
-//     `;
-
-//     // 3. Send out the email to yourself
-//     await transporter.sendMail({
-//       from: `"ClearRack Leads" <${process.env.SMTP_USER}>`,
-//       to: process.env.SMTP_USER, // Sends directly to your own inbox
-//       subject: `🔥 New Merchant Lead: ${businessName}`,
-//       html: emailHtml,
-//     });
-
-//     return NextResponse.json({
-//       success: true,
-//       message: "Lead logged and notification dispatched.",
-//     });
-//   } catch (error) {
-//     console.error("Lead submission system error:", error);
-//     return NextResponse.json(
-//       { error: "Internal processing malfunction." },
-//       { status: 500 },
-//     );
-//   }
-// }
-
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
@@ -168,7 +79,7 @@ export async function POST(request: Request) {
 
     await transporter.sendMail({
       from: `"ClearRack Leads" <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
+      to: process.env.EMAIL,
       subject: `🔥 New Merchant Lead: ${businessName}`,
       html: emailHtml,
     });

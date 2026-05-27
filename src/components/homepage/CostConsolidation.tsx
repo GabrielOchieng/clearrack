@@ -1,3 +1,5 @@
+"use client";
+
 import { Check, Plus, ArrowRight } from "lucide-react";
 
 export default function CostConsolidation() {
@@ -28,6 +30,19 @@ export default function CostConsolidation() {
       cost: "KES 2,200/mo",
     },
   ];
+
+  const handleScrollToForm = () => {
+    const targetElement = document.getElementById("claim-workspace");
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Optional: Add focus to the first input field inside the workspace form automatically
+      const firstInput = targetElement.querySelector("input");
+      if (firstInput) {
+        setTimeout(() => firstInput.focus(), 600);
+      }
+    }
+  };
 
   return (
     <section className="w-full max-w-7xl mx-auto px-6 py-16 lg:py-24 bg-brand-bg">
@@ -99,9 +114,12 @@ export default function CostConsolidation() {
           </div>
         </div>
 
-        {/* Big Action Button under the card frame */}
+        {/* Big Action Button under the card frame wired to smooth scroll handler */}
         <div className="mt-8 text-center">
-          <button className="inline-flex cursor-pointer items-center gap-2 bg-stone-900 hover:bg-brand-primary text-white text-xs sm:text-sm font-black uppercase tracking-wider px-8 py-4 rounded-xl shadow-md shadow-stone-900/10 transition-all duration-200 group">
+          <button
+            onClick={handleScrollToForm}
+            className="inline-flex cursor-pointer items-center gap-2 bg-stone-900 hover:bg-brand-primary text-white text-xs sm:text-sm font-black uppercase tracking-wider px-8 py-4 rounded-xl shadow-md shadow-stone-900/10 transition-all duration-200 group"
+          >
             Start My 14-Day Free Trial
             <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
           </button>

@@ -1,5 +1,5 @@
 import StatCard from "@/components/admin/StatCard";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export default async function AdminDashboard() {
   const stores = await prisma.store.findMany();

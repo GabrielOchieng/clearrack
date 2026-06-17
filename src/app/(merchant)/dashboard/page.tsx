@@ -85,7 +85,7 @@ export default function Dashboard() {
             Sync Logs
           </button>
           <button className="inline-flex items-center gap-1.5 bg-brand-primary hover:bg-brand-primary/90 text-white font-black text-xs uppercase tracking-wider px-4 py-2 rounded-lg shadow-sm transition-all">
-            <Plus className="h-3.5 w-3.5 stroke-[3]" />
+            <Plus className="h-3.5 w-3.5 stroke-3" />
             New Drop
           </button>
         </div>

@@ -30,23 +30,27 @@
 //     </div>
 //   );
 // }
+
 import StatCard from "@/components/admin/StatCard";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  // TypeScript will infer 'stores' as an array of Store objects automatically
   const stores = await prisma.store.findMany();
+
+  // Helper type based on the actual result of the query
+  type Store = (typeof stores)[number];
 
   const totalStores = stores.length;
 
+  // Use the local type alias 'Store' to define the parameter
   const pendingStores = stores.filter(
-    (s) => !s.logoUrl || !s.bannerColor,
+    (s: Store) => !s.logoUrl || !s.bannerColor,
   ).length;
 
   const recentSignups = stores.filter(
-    (s) => new Date(s.createdAt) > new Date(Date.now() - 86400000),
+    (s: Store) => new Date(s.createdAt) > new Date(Date.now() - 86400000),
   ).length;
 
   return (

@@ -24,7 +24,12 @@ export function proxy(request: NextRequest) {
   }
 
   // 3. Ensure we ignore standard root traffic domains
-  if (currentHost && currentHost !== "www" && currentHost !== "localhost") {
+  if (
+    currentHost &&
+    currentHost !== "www" &&
+    currentHost !== "localhost" &&
+    currentHost !== "clearrack"
+  ) {
     console.log(
       `🚀 [Proxy API Router] Intercepting traffic for tenant slug: ${currentHost}`,
     );

@@ -3,7 +3,7 @@ import CostConsolidation from "@/components/homepage/CostConsolidation";
 import DropChaosComparison from "@/components/homepage/DropChaosComparison";
 import PlatformFeatures from "@/components/homepage/PlatformFeatures";
 import WorkspaceForm from "@/components/WorkspaceForm";
-import prisma from "@/lib/prisma";
+
 import { MessageSquare, Bot, Sparkles } from "lucide-react";
 
 export default async function Home() {
